@@ -1,0 +1,3 @@
+[submodule "bookstore-api"]
+	path = bookstore-api
+	url = https://github.com/mnuhodzic/bookstore-api
