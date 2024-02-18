@@ -1,6 +1,9 @@
 # BookstoreApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.8.
+- This app uses Strapi - Headless CMS, which is added as a submodule bookstore-api
+- Before running the app, you need to initialize submodule bookstore-api by running two commands in root
+    git submodule init
+    git submodule update
 
 ## Development server
 
