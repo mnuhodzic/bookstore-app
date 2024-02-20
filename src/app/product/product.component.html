@@ -1,1 +1,25 @@
-<p>product works!</p>
+
+@if((product$ | async); as product) {
+  <h2>{{ product.name }}</h2>
+  <h2>Price: {{ product.price }}</h2>
+  <h2>Desc: {{product.description}}</h2>
+  <h2>Image: {{ product.image?.url }}</h2>
+  <img [src]="url + product.image?.url" alt="Image Alt Text">
+  <br>
+}
+
+@for(sameCategoryProduct of (sameCategoryProducts$ | async); track sameCategoryProduct.id){
+  <a [routerLink]="['/product', sameCategoryProduct.slug]">
+    {{ sameCategoryProduct.name }}
+  </a>
+  <img [src]="url + sameCategoryProduct.image?.url" alt="Image Alt Text">
+  <br>
+}
+
+@if(loading) {
+  <h2>Loading</h2>
+}
+
+@if((countdown$ | async); as time) {
+  <h2>{{ time }}</h2>
+}

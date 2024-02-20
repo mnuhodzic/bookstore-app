@@ -1,1 +1,16 @@
-<p>category works!</p>
+@if((category$ | async); as category) {
+  <h2>{{ category.name }}</h2>
+  @for(product of category.products; track product.id){
+    <a [routerLink]="['/product', product.slug]">
+      Name: {{ product.name }}  
+    </a>
+    Price: {{ product.price }} 
+    Image: {{ product.image?.url }} 
+    <img [src]="url + product.image?.url" alt="Image Alt Text">
+    <br>
+  }
+}
+
+@if(loading) {
+  <h2>Loading</h2>
+} 

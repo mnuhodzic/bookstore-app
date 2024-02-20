@@ -1,1 +1,7 @@
-<p>homepage works!</p>
+@for(category of (categories$ | async); track category.id){
+<a [routerLink]="['/category', category.slug]">
+  {{ category.name }} ( {{ category.products?.length }} )
+</a>
+} @if(loading) {
+<h2>Loading</h2>
+}
