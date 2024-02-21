@@ -13,5 +13,5 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./product/product.component').then((m) => m.ProductComponent),
   },
-  { path: '**', component: HomepageComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

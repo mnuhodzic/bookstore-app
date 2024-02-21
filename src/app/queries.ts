@@ -8,6 +8,14 @@ export const GET_CATEGORIES = gql`
         attributes {
           name
           slug
+          image {
+            data {
+              id
+              attributes {
+                url
+              }
+            }
+          }
           products {
             data {
               id
