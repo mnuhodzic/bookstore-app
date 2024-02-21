@@ -1,0 +1,9 @@
+<mat-toolbar color="primary" class="toolbar">
+  <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</button>|
+  @for(category of categories; track $index){
+    <button mat-button [routerLink]="['/category', category]" routerLinkActive="active">
+      {{ category | titlecase }} Books 
+    </button>
+    @if(category !== 'travel') {|}
+  } 
+</mat-toolbar>

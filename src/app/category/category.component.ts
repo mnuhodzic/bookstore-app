@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { flattenEntityResponseCollection as flatten } from 'strapi-flatten-graphql';
 import { GET_CATEGORY } from '../queries';
@@ -17,15 +17,20 @@ import { environment } from '../../environments/environment.development';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit{
-  private slug!: string | null;
+  private slug!: string;
   readonly url: string = environment.api_base_url;
   loading: boolean = true;
   category$!: Observable<Category>;
 
-  constructor(private apollo: Apollo, private route: ActivatedRoute) {}
+  constructor(private apollo: Apollo, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(){
-    this.slug = this.route.snapshot.paramMap.get('slug');
+    this.route.paramMap.subscribe((paramMap) => {
+      this.slug = paramMap.get('slug') as string;
+      // rerender data on url change
+      this.category$ = this.getCategory();
+      this.cdr.detectChanges();
+    });
   
     this.category$ = this.getCategory();
   }

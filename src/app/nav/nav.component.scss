@@ -1,0 +1,13 @@
+.toolbar {
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 7px 8px rgb(90 45 135 / 80%);
+
+  button {
+    font-weight: normal;
+  }
+  .active {
+    font-weight: bold !important;
+  }
+}
+

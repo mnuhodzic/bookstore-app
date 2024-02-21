@@ -9,6 +9,7 @@ import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
 import { provideHttpClient, withFetch } from "@angular/common/http";
 import { environment } from '../environments/environment.development';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch()), Apollo,
@@ -19,5 +20,5 @@ export const appConfig: ApplicationConfig = {
         cache: new InMemoryCache(),
       }),
       deps: [HttpLink],
-    },],
+    }, provideAnimationsAsync(),],
 };
