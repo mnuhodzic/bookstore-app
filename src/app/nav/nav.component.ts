@@ -19,7 +19,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './nav.component.scss',
 })
 export class NavComponent {
-  categories: string[] = ['business', 'children', 'health', 'history', 'travel'];
+  categories: string[] = ['Business Books', 'Children Books', 'Cookbooks', 'Health ', 'History Books', 'Travel Books'];
 
   constructor() {}
 }

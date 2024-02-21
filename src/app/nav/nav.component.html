@@ -2,8 +2,8 @@
   <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</button>|
   @for(category of categories; track $index){
     <button mat-button [routerLink]="['/category', category]" routerLinkActive="active">
-      {{ category | titlecase }} Books 
+      {{ category }}
     </button>
-    @if(category !== 'travel') {|}
+    @if(category !== 'Travel Books') {|}
   } 
 </mat-toolbar>

@@ -1,7 +1,9 @@
+@import "../../common.scss";
+
 .toolbar {
   display: flex;
   justify-content: center;
-  box-shadow: 0 7px 8px rgb(90 45 135 / 80%);
+  box-shadow: 0 7px 8px rgba($customPurple, 0.8);
 
   button {
     font-weight: normal;

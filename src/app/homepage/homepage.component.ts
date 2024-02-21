@@ -6,11 +6,13 @@ import { Observable, map } from 'rxjs';
 import { Category } from '../models/category';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatCardModule, MatGridListModule, MatProgressSpinnerModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
