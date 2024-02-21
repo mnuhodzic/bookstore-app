@@ -9,6 +9,7 @@ import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { environment } from '../../environments/environment.development';
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -20,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class HomepageComponent implements OnInit {
   loading: boolean = true;
   categories$!: Observable<Category[]>;
+  readonly url: string = environment.api_base_url;
 
   constructor(private apollo: Apollo) {}
   

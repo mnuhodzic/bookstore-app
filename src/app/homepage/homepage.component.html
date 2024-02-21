@@ -1,14 +1,14 @@
 <div class="container">
   <h1>Explore our top categories</h1>
-  <mat-grid-list cols="3" rowHeight="11:9" gutterSize="20px">
+  <mat-grid-list cols="3" rowHeight="12:9" gutterSize="20px">
     @for(category of (categories$ | async); track category.id){
     <mat-grid-tile>
       <mat-card class="card" [routerLink]="['/category', category.slug]">
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Category">
+        <img mat-card-image [src]="url + category.image?.url" alt="Category">
 
         <div class="card__inner">
           <h2>{{ category.name }}</h2>
-          <h4>({{ category.products?.length }} items)</h4>
+          <h4>({{ category.products?.length }} books)</h4>
         </div>
       </mat-card>
     </mat-grid-tile>
