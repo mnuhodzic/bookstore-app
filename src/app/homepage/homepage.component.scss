@@ -2,7 +2,7 @@
 
 .overlay {
   @include loading-overlay;
- }
+}
 
 .container {
   width: 60%;
@@ -10,10 +10,16 @@
   margin: 4% auto;
   padding: 20px;
 
-  h1 {
+  h1, h3 {
     text-align: center;
-    margin-bottom: 2rem;
     color: $customPurple;
+  }
+  h1 {
+    margin-bottom: 6px;
+  }
+  h3 {
+    font-weight: lighter;
+    margin-bottom: 1.5rem;
   }
 }
 

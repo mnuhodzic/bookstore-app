@@ -8,11 +8,16 @@ import { Product } from '../models/product';
 import { GET_PRODUCT, GET_SAME_CATEGORY_PRODUCTS } from '../queries';
 import { environment } from '../../environments/environment.development';
 import { CountdownService } from '../services/countdown.service';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CurrencyPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatCardModule, MatButton, MatProgressSpinnerModule, CurrencyPipe, MatIconModule, MatTooltipModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,10 +63,10 @@ export class ProductComponent implements OnInit {
       })
       .valueChanges.pipe(
         map(({ data, loading }: { data: any; loading: boolean }) => {
-          // this.loading = loading;
-          // this.error = error;
-          const products = flatten(data.categories)[0]['products'] as Product[];
-          return products?.filter((product) => product.slug !== this.slug);
+          this.loading = loading;
+          let products = flatten(data.categories)[0]['products'] as Product[];
+          products = products?.filter((product) => product.slug !== this.slug);
+          return products.slice(0, 3);
         })
       );
   }

@@ -1,25 +1,40 @@
-
 @if((product$ | async); as product) {
-  <h2>{{ product.name }}</h2>
-  <h2>Price: {{ product.price }}</h2>
-  <h2>Desc: {{product.description}}</h2>
-  <h2>Image: {{ product.image?.url }}</h2>
-  <img [src]="url + product.image?.url" alt="Image Alt Text">
-  <br>
+<div class="container">
+  <mat-card class="book-image">
+    <img mat-card-image [src]="url + product.image?.url" alt="Book" />
+  </mat-card>
+  <div class="book-info">
+    <h2>{{ product.name }}</h2>
+    <h4>{{ product.description }}</h4>
+    <h2>{{ product.price | currency : "EUR" }}</h2>
+    <div class="book-buy">
+      <button mat-raised-button color="primary" disabled>Buy</button>
+      @if((countdown$ | async); as time) {
+      <div class="timer" matTooltip="If you order it today, it will be delivered tomorrow" matTooltipPosition="right">
+        <mat-icon class="icon">alarm</mat-icon>
+        <h4>{{ time }}</h4>
+      </div>
+      }
+    </div>
+  </div>
+</div>
 }
-
-@for(sameCategoryProduct of (sameCategoryProducts$ | async); track sameCategoryProduct.id){
-  <a [routerLink]="['/product', sameCategoryProduct.slug]">
-    {{ sameCategoryProduct.name }}
-  </a>
-  <img [src]="url + sameCategoryProduct.image?.url" alt="Image Alt Text">
-  <br>
-}
+<div class="more-books-info">
+  <h2>Books from the same category</h2>
+</div>
+<div class="same-category-books">
+  @for(sameCategoryProduct of (sameCategoryProducts$ | async); track sameCategoryProduct.id){
+  <mat-card class="book" [routerLink]="['/product', sameCategoryProduct.slug]">
+    <img mat-card-image [src]="url + sameCategoryProduct.image?.url" alt="Book">
+    <mat-card-footer class="book-footer">
+      <p>{{ sameCategoryProduct.name }}</p>
+    </mat-card-footer>
+  </mat-card>
+  }
+</div>
 
 @if(loading) {
-  <h2>Loading</h2>
-}
-
-@if((countdown$ | async); as time) {
-  <h2>{{ time }}</h2>
+<div class="overlay">
+  <mat-spinner></mat-spinner>
+</div>
 }
