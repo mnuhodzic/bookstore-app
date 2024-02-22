@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
 import { flattenEntityResponseCollection as flatten } from 'strapi-flatten-graphql';
-import { GET_CATEGORY } from '../queries';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Category } from '../models/category';
 import { Observable, map } from 'rxjs';
@@ -11,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CurrencyPipe } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { GraphQLService } from '../graph-ql.service';
 
 @Component({
   selector: 'app-category',
@@ -26,7 +25,7 @@ export class CategoryComponent implements OnInit{
   loading: boolean = true;
   category$!: Observable<Category>;
 
-  constructor(private apollo: Apollo, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
+  constructor(private route: ActivatedRoute, private graphQL: GraphQLService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(){
     this.route.paramMap.subscribe((paramMap) => {
@@ -40,8 +39,7 @@ export class CategoryComponent implements OnInit{
   }
 
   private getCategory(): Observable<Category> {
-    return this.apollo.watchQuery({ query: GET_CATEGORY, variables: { slug: this.slug } })
-    .valueChanges.pipe(
+    return this.graphQL.getCategory(this.slug).pipe(
       map(({ data, loading }: { data: any; loading: boolean }) => {
         this.loading = loading;
         return flatten(data.categories)[0] as Category;

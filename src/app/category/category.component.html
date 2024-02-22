@@ -2,20 +2,23 @@
   <div class="book-grid-headline">
     <h1>{{ category.name }} @if(category.slug !== 'cookbooks') {Books}</h1> 
   </div>
-
-  <mat-grid-list cols="3" rowHeight="3:4" gutterSize="20px" class="book-grid">
-    @for(product of category.products; track product.id){
-      <mat-grid-tile>
-      <mat-card class="book-tile" [routerLink]="['/product', product.slug]">
-        <img mat-card-image [src]="url + product.image?.url" alt="Book">
-        <mat-card-footer class="book-footer">
-          <h5>{{ product.name }}</h5>
-          <p>{{ product.price | currency : "EUR" }}</p>
-        </mat-card-footer>
-      </mat-card>
-      </mat-grid-tile>
-    }
-  </mat-grid-list>
+  @if(category.products?.length) {
+    <mat-grid-list cols="3" rowHeight="3:4" gutterSize="20px" class="book-grid">
+      @for(product of category.products; track product.id){
+        <mat-grid-tile>
+        <mat-card class="book-tile" [routerLink]="['/product', product.slug]">
+          <img mat-card-image [src]="url + product.image?.url" alt="Book">
+          <mat-card-footer class="book-footer">
+            <h5>{{ product.name }}</h5>
+            <p>{{ product.price | currency : "EUR" }}</p>
+          </mat-card-footer>
+        </mat-card>
+        </mat-grid-tile>
+      }
+    </mat-grid-list>
+  } @else {
+    <h1 class="empty">No books to show!</h1>
+  }
 }
 
 @if(loading) {

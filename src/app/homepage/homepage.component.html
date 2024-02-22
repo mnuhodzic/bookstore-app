@@ -1,20 +1,25 @@
 <div class="container">
   <h1>Welcome to the online BOOKSTORE!</h1>
   <h3>Explore our top categories</h3>
-  <mat-grid-list cols="3" rowHeight="12:9" gutterSize="20px">
-    @for(category of (categories$ | async); track category.id){
-    <mat-grid-tile class="category-tile">
-      <mat-card class="category-card" [routerLink]="['/category', category.slug]">
-        <img mat-card-image [src]="url + category.image?.url" alt="Category">
+  @if((categories$ | async); as categories) {
+    <mat-grid-list cols="3" rowHeight="12:9" gutterSize="20px">
+    @for(category of categories; track category.id){
+      <mat-grid-tile class="category-tile">
+        <mat-card class="category-card" [routerLink]="['/category', category.slug]">
+          <img mat-card-image [src]="url + category.image?.url" alt="Category">
 
-        <div class="category-inner">
-          <h2>{{ category.name }}</h2>
-          <h4>({{ category.products?.length }} books)</h4>
-        </div>
-      </mat-card>
-    </mat-grid-tile>
+          <div class="category-inner">
+            <h2>{{ category.name }}</h2>
+            <h4>({{ category.products?.length }} books)</h4>
+          </div>
+        </mat-card>
+      </mat-grid-tile>
     }
-  </mat-grid-list>
+    </mat-grid-list>
+    @if(!categories.length) {
+      <h1>No categories to show!</h1>
+    }
+  }
 </div>
 
 @if(loading) {

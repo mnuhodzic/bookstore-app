@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
 import { flattenEntityResponseCollection as flatten } from 'strapi-flatten-graphql';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable, map } from 'rxjs';
 import { Product } from '../models/product';
-import { GET_PRODUCT, GET_SAME_CATEGORY_PRODUCTS } from '../queries';
 import { environment } from '../../environments/environment.development';
 import { CountdownService } from '../services/countdown.service';
 import { MatCardModule } from '@angular/material/card';
@@ -15,10 +13,21 @@ import { CurrencyPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { GraphQLService } from '../graph-ql.service';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatCardModule, MatButton, MatProgressSpinnerModule, CurrencyPipe, MatIconModule, MatTooltipModule, MatGridListModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatCardModule,
+    MatButton,
+    MatProgressSpinnerModule,
+    CurrencyPipe,
+    MatIconModule,
+    MatTooltipModule,
+    MatGridListModule,
+  ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,42 +40,37 @@ export class ProductComponent implements OnInit {
   sameCategoryProducts$!: Observable<Product[]>;
   countdown$!: Observable<string>;
 
-  constructor(private apollo: Apollo, private route: ActivatedRoute, private countdown: CountdownService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private countdown: CountdownService,
+    private graphQL: GraphQLService
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap) => {
       this.slug = paramMap.get('slug') as string;
       // rerender data on url change
-      this.product$ = this.getProduct();
-      this.sameCategoryProducts$ = this.getSameCategoryProducts();
+      this.setView();
     });
-    this.product$ = this.getProduct();
-    this.sameCategoryProducts$ = this.getSameCategoryProducts();
+    this.setView();
     this.countdown$ = this.countdown.timeRemaining$;
   }
 
-  private getProduct(): Observable<Product> {
-    return this.apollo
-      .watchQuery({ query: GET_PRODUCT, variables: { slug: this.slug } })
-      .valueChanges.pipe(
-        map(({ data, loading }: { data: any; loading: boolean }) => {
-          this.loading = loading;
-          return flatten(data.products)[0] as Product;
-        })
-      );
-  }
-
-  private getSameCategoryProducts(): Observable<Product[]> {
-    return this.apollo
-      .watchQuery({
-        query: GET_SAME_CATEGORY_PRODUCTS,
-        variables: { slug: this.slug },
+  private setView() {
+    this.product$ = this.graphQL.getProduct(this.slug).pipe(
+      map(({ data, loading }: { data: any; loading: boolean }) => {
+        this.loading = loading;
+        return flatten(data.products)[0] as Product;
       })
-      .valueChanges.pipe(
+    );
+
+    this.sameCategoryProducts$ = this.graphQL
+      .getSameCategoryProducts(this.slug)
+      .pipe(
         map(({ data, loading }: { data: any; loading: boolean }) => {
           this.loading = loading;
           let products = flatten(data.categories)[0]['products'] as Product[];
-          products = products?.filter((product) => product.slug !== this.slug);
+          products = products?.filter((product) => product.slug !== this.slug); //remove current product
           return products.slice(0, 3);
         })
       );

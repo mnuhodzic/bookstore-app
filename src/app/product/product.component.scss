@@ -73,3 +73,7 @@
     }
   }
 }
+
+.empty {
+  @include grid-headline;
+}

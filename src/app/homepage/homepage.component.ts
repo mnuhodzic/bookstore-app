@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
 import { flattenEntityResponseCollection as flatten } from 'strapi-flatten-graphql';
-import { GET_CATEGORIES } from '../queries';
 import { Observable, map } from 'rxjs';
 import { Category } from '../models/category';
 import { CommonModule } from '@angular/common';
@@ -10,10 +8,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../environments/environment.development';
+import { GraphQLService } from '../graph-ql.service';
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatCardModule, MatGridListModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatCardModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,15 +28,10 @@ export class HomepageComponent implements OnInit {
   categories$!: Observable<Category[]>;
   readonly url: string = environment.api_base_url;
 
-  constructor(private apollo: Apollo) {}
-  
-  ngOnInit(){
-    this.categories$ = this.getCategories();
-  }
+  constructor(private graphQL: GraphQLService) {}
 
-  private getCategories(): Observable<Category[]> {
-    return this.apollo.watchQuery({ query: GET_CATEGORIES })
-    .valueChanges.pipe(
+  ngOnInit() {
+    this.categories$ = this.graphQL.getCategories().pipe(
       map(({ data, loading }: { data: any; loading: boolean }) => {
         this.loading = loading;
         return flatten(data.categories) as Category[];

@@ -42,7 +42,6 @@ $shadow: 5px 5px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 @mixin footer {
+  @include grid-headline;
   margin: 5px;
-  text-align: center;
-  color: $customPurple;
 }
