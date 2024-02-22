@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../environments/environment.development';
-import { GraphQLService } from '../graph-ql.service';
+import { GraphQLService } from '../services/graph-ql.service';
 import { NavbarService } from '../services/navbar.service';
 @Component({
   selector: 'app-homepage',

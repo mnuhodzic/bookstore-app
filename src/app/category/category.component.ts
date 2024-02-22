@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CurrencyPipe } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { GraphQLService } from '../graph-ql.service';
+import { GraphQLService } from '../services/graph-ql.service';
 
 @Component({
   selector: 'app-category',

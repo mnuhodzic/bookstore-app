@@ -4,7 +4,7 @@ import {
   GET_CATEGORY,
   GET_PRODUCT,
   GET_SAME_CATEGORY_PRODUCTS,
-} from './queries';
+} from '../queries';
 import { Apollo } from 'apollo-angular';
 
 @Injectable({

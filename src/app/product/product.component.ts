@@ -13,7 +13,7 @@ import { CurrencyPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { GraphQLService } from '../graph-ql.service';
+import { GraphQLService } from '../services/graph-ql.service';
 @Component({
   selector: 'app-product',
   standalone: true,
