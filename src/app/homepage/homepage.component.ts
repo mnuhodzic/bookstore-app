@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { flattenEntityResponseCollection as flatten } from 'strapi-flatten-graphql';
 import { Observable, map } from 'rxjs';
 import { Category } from '../models/category';
@@ -9,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../environments/environment.development';
 import { GraphQLService } from '../graph-ql.service';
+import { NavbarService } from '../services/navbar.service';
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -28,13 +33,15 @@ export class HomepageComponent implements OnInit {
   categories$!: Observable<Category[]>;
   readonly url: string = environment.api_base_url;
 
-  constructor(private graphQL: GraphQLService) {}
+  constructor(private graphQL: GraphQLService, private navbar: NavbarService) {}
 
   ngOnInit() {
     this.categories$ = this.graphQL.getCategories().pipe(
       map(({ data, loading }: { data: any; loading: boolean }) => {
         this.loading = loading;
-        return flatten(data.categories) as Category[];
+        let categories = flatten(data.categories) as Category[];
+        this.navbar.setNavbar(categories.map(({ name, slug }) => ({ name, slug }))); // sets the navbar dynamically
+        return categories;
       })
     );
   }
