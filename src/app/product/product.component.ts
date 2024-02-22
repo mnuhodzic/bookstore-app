@@ -14,10 +14,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CurrencyPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatCardModule, MatButton, MatProgressSpinnerModule, CurrencyPipe, MatIconModule, MatTooltipModule],
+  imports: [CommonModule, RouterLink, MatCardModule, MatButton, MatProgressSpinnerModule, CurrencyPipe, MatIconModule, MatTooltipModule, MatGridListModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

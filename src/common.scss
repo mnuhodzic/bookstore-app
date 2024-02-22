@@ -1,5 +1,5 @@
 $customPurple: rgb(90, 45, 135);
-$shadow: 5px 8px 8px 2px rgb(0 0 0 / 30%);
+$shadow: 5px 5px 8px 0px rgba(0, 0, 0, 0.3);
 
 @mixin loading-overlay {
   position: fixed;
@@ -12,4 +12,37 @@ $shadow: 5px 8px 8px 2px rgb(0 0 0 / 30%);
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Make sure it's on top of other elements */
+}
+
+// bellow are mixins for book grid
+@mixin grid-headline {
+  text-align: center;
+  color: $customPurple;
+}
+
+@mixin grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 45%;
+  margin: 0 auto;
+  padding-bottom: 10px !important;
+}
+
+@mixin tile {
+  flex: 1 0 33%;
+  margin: 0 10px;
+  cursor: pointer;
+  max-height: 270px;
+  box-shadow: $shadow;
+
+  img {
+    height: 200px;
+  }
+}
+
+@mixin footer {
+  margin: 5px;
+  text-align: center;
+  color: $customPurple;
 }

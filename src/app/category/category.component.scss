@@ -1,0 +1,28 @@
+@import "../../common.scss";
+
+.overlay {
+  @include loading-overlay;
+}
+
+.book-grid-headline {
+  @include grid-headline;
+  margin-top: 4%;
+}
+
+.book-grid {
+  @include grid;
+  .book-tile {
+    @include tile;
+    .book-footer {
+      @include footer;
+      h5 {
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+      p {
+        margin-bottom: 0;
+        font-weight: bold;
+      }
+    }
+  }
+}

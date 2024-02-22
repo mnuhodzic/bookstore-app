@@ -19,19 +19,23 @@
   </div>
 </div>
 }
-<div class="more-books-info">
+<div class="book-grid-headline">
   <h2>Books from the same category</h2>
 </div>
-<div class="same-category-books">
+
+<mat-grid-list cols="3" rowHeight="3:4" gutterSize="20px" class="book-grid">
   @for(sameCategoryProduct of (sameCategoryProducts$ | async); track sameCategoryProduct.id){
-  <mat-card class="book" [routerLink]="['/product', sameCategoryProduct.slug]">
-    <img mat-card-image [src]="url + sameCategoryProduct.image?.url" alt="Book">
-    <mat-card-footer class="book-footer">
-      <p>{{ sameCategoryProduct.name }}</p>
-    </mat-card-footer>
-  </mat-card>
+  <mat-grid-tile>
+    <mat-card class="book-tile" [routerLink]="['/product', sameCategoryProduct.slug]">
+      <img mat-card-image [src]="url + sameCategoryProduct.image?.url" alt="Book">
+      <mat-card-footer class="book-footer">
+        <p>{{ sameCategoryProduct.name }}</p>
+      </mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
   }
-</div>
+</mat-grid-list>
+
 
 @if(loading) {
 <div class="overlay">

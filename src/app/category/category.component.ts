@@ -7,11 +7,15 @@ import { Category } from '../models/category';
 import { Observable, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environment.development';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CurrencyPipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatCardModule, MatProgressSpinnerModule, CurrencyPipe, MatGridListModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
